@@ -23,4 +23,10 @@ def sign_up():
 @app.route('/signin')
 def sign_in():
     form = UserLoginForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        return redirect(url_for('home'))
     return render_template('sign_in.html', form=form)
+
+
