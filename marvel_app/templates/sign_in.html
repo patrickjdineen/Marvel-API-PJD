@@ -3,8 +3,17 @@
 {% block content %}
 <div class="row">
     <div class="col-12 col-md-6">
+        <div>
         <p>Sign In To Your Account</p>
         {% include "shared/forms.html" %}
+        </div>
+        <div class= "google-button">
+            <p>Or</p>
+            <p>Sign in with Google!</p>
+            <a href="{{ url_for('google_auth') }}">
+                <button class="btn btn-dark">Sign in with Google</button>
+            </a>
+        </div>
     </div>
     <div class="col-12 col-md-6">
         <img src="../static/images/ironman.jpg" alt="Iron Man">

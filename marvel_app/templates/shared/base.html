@@ -14,13 +14,25 @@
 
 <body> 
 <nav class="navbar">
-    <ul>    
+    <a href="{{ url_for('home') }}">
+        <img src="../../static/images/marvel.png" alt="Marvel Home" class="home-button">
+    </a>
+    <ul>
+        {% if current_user.is_authenticated %}
         <li>
-            <a href="">Log In</a>
+            <a href="{{ url_for('heroes') }}">Heroes</a>
+        </li>
+        <li>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{{ url_for('signin') }}">Log In</a>
         </li>
         <li>
             <a href="{{ url_for('signup') }}">Sign Up</a>
         </li>
+        {% endif %}
     </ul>   
 </nav>
 

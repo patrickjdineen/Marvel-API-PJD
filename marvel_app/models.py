@@ -7,24 +7,25 @@ from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.queury.get(user_id)
+    return User.query.get(user_id)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.String,primary_key = True)
     first_name = db.Column(db.String(150), nullable = True, default = "")
     last_name = db.Column(db.String(150), nullable = True, default = "")
-    email_address = db.Column(db.String(15), nullable = False)
+    email_address = db.Column(db.String(150), nullable = False)
     password = db.Column(db.String, nullable = True, default="")
     g_auth_verify = db.Column(db.Boolean, default = False)
     token = db.Column(db.String, unique = True)
     first_login = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     hero = db.relationship('Hero', backref = 'owner', lazy=True)
 
-    def __init__(self, first_name = "", last_name = "", email_address = '"', password = "", g_auth_verify = False, token = ""):
+    def __init__(self, email_address = '"', first_name = "", last_name = "", password = "", g_auth_verify = False, token = ""):
+        #found uot that the order of this is the order that tiems will be added to table
+        self.email_address = email_address
         self.id = self.set_id()
         self.first_name = first_name
         self.last_name = last_name
-        self.email_address = email_address
         self.password = self.set_password(password)
         self.g_auth_verify = g_auth_verify
         self.token = self.set_token(24)
@@ -39,6 +40,9 @@ class User(db.Model, UserMixin):
         self.pw_hash = generate_password_hash(password)
         return self.pw_hash
 
+    def __repr__self(self):
+        return f'An account for {email_address} has been created'
+
 class Hero(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     hero_name = db.Column(db.String(150), nullable = True, default = "")
@@ -46,7 +50,7 @@ class Hero(db.Model):
     comics_appeared = db.Column(db.Integer, nullable = True)
     super_power = db.Column(db.String(200), nullable = True, default = "")
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
-    owner = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
+    user_id = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
     def __init__(self, id, hero_name = "",description = "",comics_appeared = 0,super_power = "", owner=""):
         self.id = id
