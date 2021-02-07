@@ -1,11 +1,10 @@
-html{
-    margin:0;
-    padding:0;
-}
+
 .navbar{
     display:flex;
     background-color: black;
     width: 100vw;
+    padding: 0vw, 3vw;
+    font-family: avengerFont;
 }
 .navbar a, .navbar li{
     color:white;
@@ -20,7 +19,8 @@ html{
 /* Header Image Syling*/
 .hero-image{
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(images/mcu.jpg);
-    height:100vh;
+    height:95vh;
+    width:100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size:cover;
@@ -34,4 +34,6 @@ html{
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    font-family: avengerFont;
+    font-size: 40vh;
 }

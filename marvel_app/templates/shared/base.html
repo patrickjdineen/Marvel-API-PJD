@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style>
+    @font-face {
+        font-family:"avengerFont";
+        src: url(../../static/avengero-font/AvengeroRegular-zvgl.ttf);
+    }
+</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -14,10 +20,10 @@
 
 <body> 
 <nav class="navbar">
-    <a href="{{ url_for('home') }}">
-        <img src="../../static/images/marvel.png" alt="Marvel Home" class="home-button">
-    </a>
     <ul>
+        <a href="{{ url_for('home') }}">
+            <img src="../../static/images/marvel.png" alt="Marvel Home" class="home-button">
+        </a>
         {% if current_user.is_authenticated %}
         <li>
             <a href="{{ url_for('heroes') }}">Heroes</a>
