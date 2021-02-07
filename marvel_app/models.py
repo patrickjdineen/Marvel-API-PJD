@@ -52,17 +52,16 @@ class Hero(db.Model):
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self, id, hero_name = "",description = "",comics_appeared = 0,super_power = "", owner=""):
-        self.id = id
+    def __init__(self, hero_name = "",description = "",comics_appeared = 0,super_power = "", user_id=""):
         self.hero_name = hero_name
         self.description = description
         self.comics_appeared = comics_appeared
         self.super_power = super_power
-        self.owner = owner
+        self.user_id = user_id
 
 class HeroSchema(ma.Schema):
     class Meta:
         fields = ('id','hero_name','description','comics_appeared','super_power')
 
-hero_schema = HeroSchema
+hero_schema = HeroSchema()
 heroes_schema = HeroSchema(many = True)

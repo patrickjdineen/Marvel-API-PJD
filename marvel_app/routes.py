@@ -14,40 +14,30 @@ def home():
 
 @app.route('/signup', methods = ['GET','POST'])
 def signup():
-    print('checkpoint -1')
     form = UserLoginForm()
-    print('checkpoint0')
-    #try:
-    if request.method == 'POST' and form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-        user = User(email, password = password)
-        print('checkpoint1')
-        db.session.add(user)
-        print('checkpoint2')
-        db.session.commit()
-        print('checkpoint3')
-        return redirect(url_for('signin'))
-    #except:
-    #    print('checkpoint4')
-    #    return Exception('Invalid Data in form. Please try again!')
-    print('checkpoint b')
+    try:
+        if request.method == 'POST' and form.validate_on_submit():
+            email = form.email.data
+            password = form.password.data
+            user = User(email, password = password)
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('signin'))
+    except:
+        return Exception('Invalid Data in form. Please try again!')
     return render_template('sign_up.html', form=form)
 
 @app.route('/signin', methods = ['GET', 'POST'])
 def signin():
     form = UserLoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        print('check 1')
         email = form.email.data
         password = form.password.data
         logged_user = User.query.filter(User.email_address == email).first()
         print(email)
         print(logged_user)
         print(password)
-        print('check2')
         if logged_user and check_password_hash(logged_user.password,password):
-            print('check3')
             login_user(logged_user)
             return redirect(url_for('home'))
     return render_template('sign_in.html', form=form)
@@ -65,6 +55,70 @@ def logout():
         for key in list(session.keys()):
             session.pop(key)
     return redirect(url_for('home'))
+
+#API Routes
+#create
+@app.route('/hero', methods = ['POST'])
+@token_required
+def _hero(current_user_token):
+    hero_name = request.json['hero_name']
+    description = request.json['description']
+    comics_appeared = request.json['comics_appeared']
+    super_power = request.json['super_power']
+    user_id = current_user_token.token
+    hero = Hero(hero_name, description,comics_appeared,super_power, user_id = user_id)
+    db.session.add(hero)
+    db.session.commit()
+    print(hero)
+    response = hero_schema.dump(hero)
+    return jsonify(response)
+
+
+#get all
+@app.route('/hero', methods = ['GET'])
+@token_required
+def get_heroes(current_user_token):
+    owner, current_user_token = verify_owner(current_user_token)
+    heroes = Hero.query.filter_by(user_id = owner.user_id).all()
+    response = heroes_schema.dump(heroes)
+    return jsonify(response)
+
+#get 1
+@app.route('/hero/<id>', methods = ['GET'])
+@token_required
+def get_hero(current_user_token,id):
+    owner, current_user_token = verify_owner(current_user_token)
+    hero = Hero.query.get(id)
+    response = hero_schema.dump(hero)
+    return jsonify(response)
+
+#update 1
+@app.route('/hero/<id>', methods = ['POST','PUT'])
+@token_required
+def update_hero(current_user_token,id):
+    hero_name = request.json['hero_name']
+    description = request.json['description']
+    comics_appeared = request.json['comics_appeared']
+    super_power = request.json['super_power']
+    user_id = current_user_token.token
+    
+    hero = Hero(hero_name, description,comics_appeared,super_power, user_id = user_id)
+    db.session.commit()
+    response = hero_schema.dump(hero)
+    return jsonify(response)
+
+# delete
+#get 1
+@app.route('/hero/<id>', methods = ['DELETE'])
+@token_required
+def del_hero(current_user_token, id):
+    owner, current_user_token = verify_owner(current_user_token)
+    hero = Hero.query.get(id)
+    db.session.delete(hero)
+    db.session.commit()
+    response = hero_schema.dump(hero)
+    return jsonify(response)
+
 
 #GOOGLE AUTH ROUTES
 google = oauth.register(
