@@ -3,7 +3,6 @@
     display:flex;
     background-color: black;
     width: 100vw;
-    padding: 0vw, 3vw;
     font-family: avengerFont;
 }
 .navbar a, .navbar li{
@@ -11,6 +10,7 @@
     list-style: none;
     text-decoration: none;
     display:inline;
+    padding: .5vh .5vw;
 }
 
 .home-button{
@@ -36,4 +36,24 @@
     color: white;
     font-family: avengerFont;
     font-size: 40vh;
+}
+
+/*sign in pages*/
+
+.sign-image{
+    max-height:50vh;
+    height:50vh;
+}
+.avenger-heading{
+    font-family: avengerFont;
+    margin: 1vh 0;
+}
+.form-control{
+    margin-top:1vw;
+}
+
+/*api text*/
+.api-text{
+    color:white;
+    margin-left:5vw;
 }

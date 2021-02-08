@@ -15,16 +15,13 @@ def home():
 @app.route('/signup', methods = ['GET','POST'])
 def signup():
     form = UserLoginForm()
-    try:
-        if request.method == 'POST' and form.validate_on_submit():
-            email = form.email.data
-            password = form.password.data
-            user = User(email, password = password)
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('signin'))
-    except:
-        return Exception('Invalid Data in form. Please try again!')
+    if request.method == 'POST' and form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        user = User(email, password = password)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('signin'))
     return render_template('sign_up.html', form=form)
 
 @app.route('/signin', methods = ['GET', 'POST'])
