@@ -1,0 +1,59 @@
+
+.navbar{
+    display:flex;
+    background-color: black;
+    width: 100vw;
+    font-family: avengerFont;
+}
+.navbar a, .navbar li{
+    color:white;
+    list-style: none;
+    text-decoration: none;
+    display:inline;
+    padding: .5vh .5vw;
+}
+
+.home-button{
+    max-height:4vh;
+}
+/* Header Image Syling*/
+.hero-image{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(images/mcu.jpg);
+    height:95vh;
+    width:100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    position:relative;
+    margin:0;
+}
+.hero-text {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: avengerFont;
+    font-size: 40vh;
+}
+
+/*sign in pages*/
+
+.sign-image{
+    max-height:50vh;
+    height:50vh;
+}
+.avenger-heading{
+    font-family: avengerFont;
+    margin: 1vh 0;
+}
+.form-control{
+    margin-top:1vw;
+}
+
+/*api text*/
+.api-text{
+    color:white;
+    margin-left:5vw;
+}

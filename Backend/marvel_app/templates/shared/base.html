@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    @font-face {
+        font-family:"avengerFont";
+        src: url(../../static/avengero-font/AvengeroRegular-zvgl.ttf);
+    }
+    @font-face{
+        font-family:"marvelFont";
+        src: url(../../static/MarvelRegular-Dj83.ttf)
+    }
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Marvel" content="An API for Collecting Marvel Heroes"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet" href="../../static/styles.css">
+<title>Marvel API
+</title>
+</head>
+
+<body> 
+<nav class="navbar">
+    <ul>
+        <a href="{{ url_for('home') }}">
+            <img src="../../static/images/marvel.png" alt="Marvel Home" class="home-button">
+        </a>
+        {% if current_user.is_authenticated %}
+        <li>
+            <a href="{{ url_for('heroes') }}">Your Heroes</a>
+        </li>
+        <li>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+        </li>
+        <li>
+            <a href="{{ url_for('signin') }}">Log In</a>
+        </li>
+        {% endif %}
+    </ul>   
+</nav>
+
+
+{% block content %}
+
+{% endblock content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+</body>
+</html>
