@@ -9,9 +9,11 @@ from flask_login import LoginManager
 from authlib.integrations.flask_client import OAuth
 
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(Config)
+cors = CORS(app)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
