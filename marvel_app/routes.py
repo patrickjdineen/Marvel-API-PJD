@@ -93,13 +93,14 @@ def get_hero(current_user_token,id):
 @app.route('/hero/<id>', methods = ['POST','PUT'])
 @token_required
 def update_hero(current_user_token,id):
-    hero_name = request.json['hero_name']
-    description = request.json['description']
-    comics_appeared = request.json['comics_appeared']
-    super_power = request.json['super_power']
-    user_id = current_user_token.token
-    
-    hero = Hero(hero_name, description,comics_appeared,super_power, user_id = user_id)
+    owner, current_user_token = verify_owner(current_user_token)
+    hero = Hero.query.get(id)
+
+    hero.hero_name = request.json['hero_name']
+    hero.description = request.json['description']
+    hero.comics_appeared = request.json['comics_appeared']
+    hero.super_power = request.json['super_power']
+
     db.session.commit()
     response = hero_schema.dump(hero)
     return jsonify(response)
